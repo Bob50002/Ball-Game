@@ -6,14 +6,28 @@ public class BallStateManager : MonoBehaviour
 {
     BallBaseState CurrentState;
 
-    BallShootState ShootState = new BallShootState();
+    public BallShootState _ShootState = new BallShootState();
 
-    BallMoveState MoveState = new BallMoveState();
+    public BallMoveState _MoveState = new BallMoveState();
 
+    public GameObject _ArrowHorizontal;
+
+    public GameObject _ArrowForward;
+
+    [HideInInspector]
+    public float _DegreeToRotate;
+    
+    
+    [HideInInspector]
+    public Rigidbody _RB;
+
+    public float _Speed;
 
     void Start()
     {
-        CurrentState = MoveState;
+        CurrentState = _MoveState;
+
+        _RB = gameObject.GetComponent<Rigidbody>();
 
         CurrentState.EnterState(this);
     }
@@ -21,6 +35,13 @@ public class BallStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CurrentState.Cha
+        CurrentState.UpdateState(this);
+    }
+
+    public void SwitchState(BallBaseState State)
+    {
+        CurrentState = State;
+
+        State.EnterState(this);
     }
 }
