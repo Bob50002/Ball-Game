@@ -7,7 +7,9 @@ public class BallReleasedState : BallBaseState
     {
         Ball.GetComponent<MeshRenderer>().enabled = false;
 
-        Ball.transform.rotation = Quaternion.identity;
+        Ball.transform.rotation = Quaternion.identity; //Reset rotation
+
+        Ball.transform.position = new Vector3(Ball._OriginalPositionX, Ball.transform.position.y, Ball.transform.position.z); //Reset position
 
         Ball._PowerGauge.value = 0;    //Reset power gauge
 

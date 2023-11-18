@@ -20,6 +20,8 @@ public class BallStateManager : MonoBehaviour
     public float _MaxPower;
     [HideInInspector]
     public float _OriginalCountdownValue;
+    [HideInInspector]
+    public float _OriginalPositionX;
 
     [Header("Ball shoot")]
     public GameObject _BallPrefab;
@@ -37,6 +39,8 @@ public class BallStateManager : MonoBehaviour
         CurrentState = _MoveState;
 
         _BallPosition = this.transform;
+
+        _OriginalPositionX = this.transform.position.x;
 
         _MaxPower = _Power * 10;
 
