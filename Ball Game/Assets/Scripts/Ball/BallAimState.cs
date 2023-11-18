@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BallAimState : BallBaseState
 {
-    private Vector3 FromPoint = new Vector3(0.0F, 45.0F, 0.0F);
+    private Vector3 FromPoint = new Vector3(0.0F, 45.0F, 0.0F);      //Get Maximum degree
 
-    private Vector3 ToPoint = new Vector3(0.0F, -45.0F, 0.0F);
+    private Vector3 ToPoint = new Vector3(0.0F, -45.0F, 0.0F);      //Get Minimum degree
 
     private float RotateSpeed = 1.0F;
     public override void EnterState(BallStateManager Ball)
@@ -23,7 +23,7 @@ public class BallAimState : BallBaseState
 
         float lerp = 0.5F * (1.0F + Mathf.Sin(Mathf.PI * Time.time * RotateSpeed));
 
-        Ball.transform.localRotation = Quaternion.Lerp(From, To, lerp);   //Spin
+        Ball.transform.localRotation = Quaternion.Lerp(From, To, lerp);   //Rotate
 
 
         if (Input.GetKeyDown(KeyCode.Space))

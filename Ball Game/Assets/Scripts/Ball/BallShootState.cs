@@ -2,29 +2,23 @@ using UnityEngine;
 
 public class BallShootState : BallBaseState
 {
-    private float MaxPower;
+    
     private bool PowerDecay;
 
     public override void EnterState(BallStateManager Ball)
     {
-        MaxPower = Ball._Power * 10;
-
         PowerDecay = false;
-
-        Ball._PowerGauge.maxValue = MaxPower;
     }
 
     public override void UpdateState(BallStateManager Ball)
     {
         Ball._PowerGauge.value = Ball._Power;
 
-
-
         if (PowerDecay == false)
         {
             Ball._Power += 10 * Time.deltaTime;
 
-            if (Ball._Power >= MaxPower)
+            if (Ball._Power >= Ball._MaxPower)          //Power increase
             {
                 PowerDecay = true;
             }
@@ -36,23 +30,26 @@ public class BallShootState : BallBaseState
 
             if (Ball._Power <= 0)
             {
-                PowerDecay = false;
+                PowerDecay = false;                     //Power decrease
             }
         }
+
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Ball._ArrowForward.SetActive(false);     //Disable arrow
+         
+            GameObject NewBall = GameObject.Instantiate(Ball._BallPrefab, Ball._BallPosition);  //Instantiate new ball
 
-            Ball._PowerGauge.value = 0;    //Reset power
+            Rigidbody RB = NewBall.GetComponent<Rigidbody>(); //Get rigidbody
 
-            Ball._RB.velocity = (Ball.transform.forward * Ball._Power); //Add power to ball
+            RB.velocity = (NewBall.transform.forward * Ball._Power);   //Add power to ball
+
+            NewBall.transform.parent = Ball._BallPrefabDump.transform;
 
             Ball.SwitchState(Ball._ReleasedState);  //Switch state
 
-
         }
-
-
     }
 }

@@ -5,6 +5,8 @@ public class BallMoveState : BallBaseState
     public override void EnterState(BallStateManager Ball)
     {
         Ball._ArrowForward.SetActive(false);
+
+        Ball.GetComponent<MeshRenderer>().enabled = true;
     }
 
     public override void UpdateState(BallStateManager Ball)
