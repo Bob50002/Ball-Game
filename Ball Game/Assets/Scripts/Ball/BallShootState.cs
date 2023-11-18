@@ -2,54 +2,55 @@ using UnityEngine;
 
 public class BallShootState : BallBaseState
 {
-    private Vector3 m_from = new Vector3(0.0F, 45.0F, 0.0F);
-
-    private Vector3 m_to = new Vector3(0.0F, -45.0F, 0.0F);
-
-    private float RotateSpeed = 1.0F;
-
-    private float Power = 100;
-
     private float MaxPower;
-
-    private bool ReadyToShoot;
+    private bool PowerDecay;
 
     public override void EnterState(BallStateManager Ball)
     {
-        MaxPower = Power * 10;
+        MaxPower = Ball._Power * 10;
+
+        PowerDecay = false;
 
         Ball._PowerGauge.maxValue = MaxPower;
-
-        Ball._ArrowForward.SetActive(true);
-
-        Ball._ArrowHorizontal.SetActive(false);
     }
 
     public override void UpdateState(BallStateManager Ball)
     {
-        Quaternion From = Quaternion.Euler(this.m_from);
-        Quaternion To = Quaternion.Euler(this.m_to);
-
-        float lerp = 0.5F * (1.0F + Mathf.Sin(Mathf.PI * Time.realtimeSinceStartup * this.RotateSpeed)); 
-        Ball.transform.localRotation = Quaternion.Lerp(From, To, lerp);
+        Ball._PowerGauge.value = Ball._Power;
 
 
 
-        if (Input.GetKey(KeyCode.Space))
+        if (PowerDecay == false)
         {
-            Power += 1000 * Time.deltaTime;
+            Ball._Power += 10 * Time.deltaTime;
+
+            if (Ball._Power >= MaxPower)
+            {
+                PowerDecay = true;
+            }
+        }
+       
+        if (PowerDecay == true)
+        {
+            Ball._Power -= 10 * Time.deltaTime;
+
+            if (Ball._Power <= 0)
+            {
+                PowerDecay = false;
+            }
         }
 
-        Ball._PowerGauge.value = Power;
-
-
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Ball._ArrowForward.SetActive(false);     //Disable arrow
 
-            Ball._RB.AddForce(Ball.transform.forward * Power); //Add power to ball
+            Ball._PowerGauge.value = 0;    //Reset power
+
+            Ball._RB.velocity = (Ball.transform.forward * Ball._Power); //Add power to ball
 
             Ball.SwitchState(Ball._ReleasedState);  //Switch state
+
+
         }
 
 

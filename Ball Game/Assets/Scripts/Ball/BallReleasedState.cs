@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class BallReleasedState : BallBaseState
 {
-    [SerializeField] GameObject NewBallPrefab;
+    
 
     public override void EnterState(BallStateManager Ball)
     {
-   
+        
     }
    
 
@@ -14,7 +14,9 @@ public class BallReleasedState : BallBaseState
     {
         if (Ball._RB.velocity.magnitude == 0)
         {
-            //Instantiate(NewBallPrefab, 
+            Debug.Log("Stop");
+
+            Ball.GetComponent<BallStateManager>().enabled = false;
         }
     }
 }

@@ -6,27 +6,22 @@ public class BallStateManager : MonoBehaviour
 {
     BallBaseState CurrentState;
 
-    public BallShootState _ShootState = new BallShootState();
-
     public BallMoveState _MoveState = new BallMoveState();
-
+    public BallShootState _ShootState = new BallShootState();
+    public BallAimState _AimState = new BallAimState();
     public BallReleasedState _ReleasedState = new BallReleasedState();
-
-
-
+    
+    [Header("Arrows")]
     public GameObject _ArrowHorizontal;
-
     public GameObject _ArrowForward;
-
     public Slider _PowerGauge;
 
-
+    [Header("Ball shoot")]
     public float _Speed;
+    public float _Power;
     
     [HideInInspector]
     public Rigidbody _RB;
-
-    
 
     void Start()
     {

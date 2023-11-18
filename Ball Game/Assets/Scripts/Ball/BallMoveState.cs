@@ -22,7 +22,7 @@ public class BallMoveState : BallBaseState
 
        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Ball.SwitchState(Ball._ShootState);
+            Ball.SwitchState(Ball._AimState);
         }
     }
 }
