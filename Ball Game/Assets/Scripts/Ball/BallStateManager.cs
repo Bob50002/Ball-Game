@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class BallStateManager : MonoBehaviour
 {
     BallBaseState CurrentState;
@@ -10,18 +10,23 @@ public class BallStateManager : MonoBehaviour
 
     public BallMoveState _MoveState = new BallMoveState();
 
+    public BallReleasedState _ReleasedState = new BallReleasedState();
+
+
+
     public GameObject _ArrowHorizontal;
 
     public GameObject _ArrowForward;
 
-    [HideInInspector]
-    public float _DegreeToRotate;
-    
+    public Slider _PowerGauge;
+
+
+    public float _Speed;
     
     [HideInInspector]
     public Rigidbody _RB;
 
-    public float _Speed;
+    
 
     void Start()
     {
@@ -32,7 +37,6 @@ public class BallStateManager : MonoBehaviour
         CurrentState.EnterState(this);
     }
 
-    // Update is called once per frame
     void Update()
     {
         CurrentState.UpdateState(this);
