@@ -6,6 +6,8 @@ public class BallMoveState : BallBaseState
     {
         Ball._ArrowForward.SetActive(false);
 
+        Ball._ArrowHorizontal.SetActive(true);
+
         Ball.GetComponent<MeshRenderer>().enabled = true;
     }
 
